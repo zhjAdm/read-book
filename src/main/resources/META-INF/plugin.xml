@@ -1,0 +1,43 @@
+<idea-plugin>
+    <id>org.example.read-book</id>
+    <name>Read-Book</name>
+    <vendor email="zhjadm@gmail.com" url="http://zhjadn.gmaiol.io">zhjAdm</vendor>
+
+    <description><![CDATA[愉快的摸鱼!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <projectConfigurable groupId="other" displayName="Read Book Config" id="test.id"
+                             instance="com.zhjAdm.factory.SettingFactory"/>
+    </extensions>
+
+    <actions>
+        <!-- id 为了唯一性可以以包名开头，text 为显示的内容，popup=true表示自动弹出，也就是子菜单，否则会直接显示 group 内的 action -->
+        <group id="ReadBook" text="ReadBook" popup="true">
+            <!-- 每个 group 都要加入某个 group，如主菜单区域 group id="MainMenu"，relative-to-action 既可以填 group id，也可以填 action id，总之就是相对页面上某个元素 -->
+            <add-to-group group-id="ToolsMenu" relative-to-action="ToolsMenu" anchor="after" />
+        </group>
+
+        <action id="ReadPrevLineAction" class="com.zhjAdm.action.ReadPrevLineAction" text="Read Prev Line" description="上一行">
+            <add-to-group group-id="ReadBook" anchor="first" />
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl 1"/>
+        </action>
+        <action id="ReadNextLineAction" class="com.zhjAdm.action.ReadNextLineAction" text="Read Next Line" description="下一行">
+            <add-to-group group-id="ReadBook" anchor="after" relative-to-action="ReadPrevLineAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl 2"/>
+        </action>
+        <action id="BossKeyAction" class="com.zhjAdm.action.BossKeyAction" text="Boss Key" description="老板键">
+            <add-to-group group-id="ReadBook" anchor="after" relative-to-action="ReadNextLineAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="alt BACK_QUOTE"/>
+        </action>
+        <action id="AutomaticAction" class="com.zhjAdm.action.AutomaticAction" text="Automatic"
+                description="自动阅读">
+            <add-to-group group-id="ReadBook" anchor="after" relative-to-action="BossKeyAction"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl 3"/>
+        </action>
+    </actions>
+</idea-plugin>
